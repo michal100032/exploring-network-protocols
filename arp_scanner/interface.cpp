@@ -6,8 +6,6 @@
 #include <vector>
 #include <cstring>
 
-// #include <iostream>
-
 interface* interface::s_interfaces = nullptr;
 int interface::s_interfaceCount = 0;
 
