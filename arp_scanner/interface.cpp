@@ -43,6 +43,8 @@ void interface::loadInterfaces() {
 		}
 
 	}
+	freeifaddrs(addrs);
+	
 	s_interfaceCount = interfs.size();
 	s_interfaces = new interface[s_interfaceCount];
 	memcpy(s_interfaces, &interfs[0], sizeof(interface) * s_interfaceCount);

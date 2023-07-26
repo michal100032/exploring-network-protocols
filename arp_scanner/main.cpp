@@ -1,27 +1,24 @@
 #include <iostream>
 
+#include "arp.h"
 #include "interface.h"
 
-
-std::ostream& operator<<(std::ostream& stream, const in_addr& ip) {
-	in_addr mip = ip;
-	uint8_t* byte = (uint8_t*)&mip;
-	while(byte < (uint8_t*)&mip + 3) {
-		stream << unsigned(*byte) << ".";
-		byte++;
-	}
-	stream << unsigned(*byte);
-	return stream;
-}
+// run with sudo
 
 int main() {
 	
 	interface::loadInterfaces();
 	for(int i = 0; i < interface::interfaceCount(); i++) {
-		std::cout << interface::get(i).name() << std::endl;
-		std::cout << interface::get(i).ip() << std::endl;
-		std::cout << interface::get(i).mask() << std::endl;
-		std::cout << interface::get(i).mac() << std::endl;
+		interface intf = interface::get(i);
+		if(intf.name() == "lo")
+			continue;
+		
+		std::cout << "Scanning interface " << intf.name() << "..." << std::endl;
+		std::vector<arp_record> arps = arp::scan(intf);
+
+		for(int arp = 0; arp < arps.size(); arp++) {
+			std::cout << inet_ntoa(arps[arp].ip) << " " << arps[arp].mac << std::endl;
+		}
 	}
 
 	return 0;
