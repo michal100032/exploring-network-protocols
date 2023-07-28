@@ -4,3 +4,6 @@ This program sends ARP messages targeted to all IP addresses available in the ne
 
 ### DNS request
 The program first reads the DNS address from /etc/resolv.conf and then sends a request to it with a user-specified domain. Formatting of the DNS packet has been implemented from scratch.
+
+### ICMP scanner
+This program is very similar to the ARP scanner, the only difference being that it uses ICMP instead of ARP.
